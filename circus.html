@@ -249,6 +249,13 @@ var config = {
 */
 function createObject() {
 
+  var div = document.createElement('div');
+        var img = document.createElement('img');
+        img.src = 'loading.GIF';
+        div.style.cssText = 'position: fixed; top: 5%; left: 35%; z-index: 5000; width: 50px; text-align: center; ';
+        div.appendChild(img);
+        document.body.appendChild(div);
+        return true;
     landing.createObjectFromLanding(config);
 	
 }
