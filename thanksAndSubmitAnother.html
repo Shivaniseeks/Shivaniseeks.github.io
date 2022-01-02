@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-image {
+  top:25%;  
+  background-image: linear-gradient(rgba(37, 134, 172, 0.808), rgba(21, 224, 224, 0.377));
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.hero-text button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hero-text button:hover {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script>
+function redirectTorefereeform(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const leadId = urlParams.get('leadid');
+    window.location.replace("../FormsWebsite/refereeform.html?leadid=" + leadId);
+}
+</script>
+</head>
+<body>
+
+<div class="hero-image">
+  <div class="hero-text">
+    <h1 style="font-size:50px">Thank you for your submission</h1>
+    <button onclick="redirectTorefereeform()">Submit another referral</button>
+  </div>
+</div>
+
+</body>
+</html>
