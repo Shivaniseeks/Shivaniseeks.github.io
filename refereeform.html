@@ -228,13 +228,14 @@ function sendToCreatio() {
    +relationship + "&leadid="+leadId;
 
     httpGetAsync(creatioUrl);
-  //  window.location.replace("../thanksAndSubmitAnother.html?leadid="+leadId);
+   window.location.replace("../thanksAndSubmitAnother.html?leadid="+leadId);
 }
 
 function httpGetAsync(theUrl)
 {
     console.log( ":) " +theUrl)
-    var xmlHttp = new XMLHttpRequest();
+    window.open(theUrl);
+   /* var xmlHttp = new XMLHttpRequest();
     
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -245,7 +246,8 @@ function httpGetAsync(theUrl)
     xmlHttp.setRequestHeader('Access-Control-Allow-Origin', '*');
     xmlHttp.setRequestHeader("x-requested-with", "XMLHttpRequest");
     xmlHttp.setRequestHeader("Access-Control-Allow-Methods", "GET");
-    xmlHttp.send(null);
+    xmlHttp.send(null);*/
+    return;
 }
 
 </script>
