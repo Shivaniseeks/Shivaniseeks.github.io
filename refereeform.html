@@ -227,18 +227,21 @@ function sendToCreatio() {
    +relationship + "&leadid="+leadId;
 
     httpGetAsync(creatioUrl,this);
-    window.location.replace("../FormsWebsite/thanksAndSubmitAnother.html?leadid="+leadId);
+    window.location.replace("../thanksAndSubmitAnother.html?leadid="+leadId);
 }
 
 function httpGetAsync(theUrl, callback)
 {
     console.log( ":) " +theUrl)
     var xmlHttp = new XMLHttpRequest();
+    
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.setRequestHeader( "Access-Control-Allow-Origin", "*");
+    xmlHttp.setRequestHeader( "Access-Control-Allow-Methods", "GET");
     xmlHttp.send(null);
 }
 
