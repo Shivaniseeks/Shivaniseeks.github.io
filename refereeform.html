@@ -206,7 +206,8 @@
     </style>
   </head>
   <body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://webtracking-v01.bpmonline.com/JS/track-cookies.js"></script>
 <script src="https://webtracking-v01.bpmonline.com/JS/create-object.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -226,22 +227,24 @@ function sendToCreatio() {
    + lname + "&phone=" + phone + "&email="+email + "&address=" + address + "&relationship="
    +relationship + "&leadid="+leadId;
 
-    httpGetAsync(creatioUrl,this);
-    window.location.replace("../thanksAndSubmitAnother.html?leadid="+leadId);
+    httpGetAsync(creatioUrl);
+  //  window.location.replace("../thanksAndSubmitAnother.html?leadid="+leadId);
 }
 
-function httpGetAsync(theUrl, callback)
+function httpGetAsync(theUrl)
 {
     console.log( ":) " +theUrl)
     var xmlHttp = new XMLHttpRequest();
     
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+           // callback(xmlHttp.responseText);
+           return ;
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.setRequestHeader( "Access-Control-Allow-Origin", "*");
-    xmlHttp.setRequestHeader( "Access-Control-Allow-Methods", "GET");
+    xmlHttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xmlHttp.setRequestHeader("x-requested-with", "XMLHttpRequest");
+    xmlHttp.setRequestHeader("Access-Control-Allow-Methods", "GET");
     xmlHttp.send(null);
 }
 
