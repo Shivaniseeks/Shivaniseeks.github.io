@@ -99,9 +99,10 @@ img.logo {
     console.log(leadId);
     console.log(contactId);
    var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://dcci.creatio.com/0/Rest/UsrAnonymousConfigurationService/ConfirmCaptcha");
+      xhr.open("POST", "http://dcci.creatio.com/0/Rest/UsrAnonymousConfigurationService/ConfirmCaptcha");
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Content-Type", "text/plain");
+      xhr.setRequestHeader('Access-Control-Allow-Origin','*');
 
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -125,8 +126,8 @@ img.logo {
   <div class="imgcontainer">
     <img src="dc_logo.jpg" alt="logo" class="logo">
   </div>
-  <h2 id="leadName" >Introduction form</h2>
-  <form  class="container" id="responseForm">
+  <h2 id="LeadName" >Introduction form</h2>
+  <form action="ThankYouPage.html" class="container" id="responseForm">
     <p id="responseMark">Please enter your response</p>
     <input type="radio" id="response" name="response" value="Yes" >
     <label for="yes_response">Yes, I am interested</label><br><br>
