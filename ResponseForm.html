@@ -77,8 +77,8 @@ img.logo {
      
   function onload() {
     const urlParams = new URLSearchParams(window.location.search);
-    const leadName = urlParams.get('leadName');
-    document.getElementById("leadName").innerHTML=leadName;
+    const leadName = urlParams.get('LeadName');
+    document.getElementById("LeadName").innerHTML=leadName;
     var element = document.getElementById('submit');
     element.onclick = validate;
   }
@@ -92,9 +92,14 @@ img.logo {
     }
   }
   function onSubmit(token) {
-   console.log("token="+token);
+    const urlParams = new URLSearchParams(window.location.search);
+    const leadId = urlParams.get('LeadId');
+    const contactId = urlParams.get('ContactId');
+    console.log("token="+token);
+    console.log(leadId);
+    console.log(contactId);
    var xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://localhost:9097/0/ServiceModel/UsrAnonymousConfigurationService.svc/ConfirmCaptcha");
+      xhr.open("POST", "https://https://dcci.creatio.com/0/ServiceModel/UsrAnonymousApprovalService.svc/ConfirmCaptcha");
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Content-Type", "text/plain");
 
@@ -103,10 +108,10 @@ img.logo {
           console.log(xhr.status);
           console.log(xhr.responseText);
         }};
-
+      console.log(document.querySelector('input[name="response"]:checked').value);
     const responseDetails= {
-      LeadId: "44a6837b-1a86-4cce-b97e-eaad4996b95c",
-      ContactId: "44a6837b-1a86-4cce-b97e-eaad4996b95c", 
+      LeadId: leadId,
+      ContactId: contactId, 
       LeadResponse: "Yes",
       GToken : token
     };
