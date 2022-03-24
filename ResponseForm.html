@@ -113,7 +113,7 @@ img.logo {
     const responseDetails= {
       LeadId: leadId,
       ContactId: contactId, 
-      LeadResponse: "Yes",
+      LeadResponse: document.querySelector('input[name="response"]:checked').value,
       GToken : token
     };
     const respJson = JSON.stringify(responseDetails);
