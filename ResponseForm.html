@@ -103,7 +103,7 @@ img.logo {
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Content-Type", "text/plain");
       xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-      xhr.withCredentials = true;
+    
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           console.log(xhr.status);
