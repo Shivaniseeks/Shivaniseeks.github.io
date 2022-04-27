@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -60,6 +59,12 @@ input[type='radio']:checked:before {
   opacity: 0.9;
   border-radius: 0.5em;
 }
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
 
 .imgcontainer {
   float: center; 
@@ -70,9 +75,14 @@ img.logo {
   width: 10%;
     
 }
+
+.spanerror
+{
+  color :red;
+  font-size: 0.8em;
+}
 </style>
-<script src="https://www.google.com/recaptcha/api.js?render=6Lc5Je8eAAAAAMKpzGRBH3Vv6XKWviLPcq5JYuHu">
-</script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
      
   function onload() {
@@ -87,17 +97,20 @@ img.logo {
     event.preventDefault();
     if (!(response[0].checked || response[1].checked)) {
       document.getElementById('responseMark').style.color = "red";
-    } else {
-      grecaptcha.execute();
-    }
+    } else if(grecaptcha && grecaptcha.getResponse().length === 0)
+	{
+		 var capErrorCB=  document.getElementById("captchacheckbox");
+         capErrorCB.style.display = "block";
+	}
+	else{
+		
+        onSubmit(grecaptcha.getResponse());
+	}	
+    
   }
   function onSubmit(token) {
+  document.getElementById('submit').disabled = true;
     const urlParams = new URLSearchParams(window.location.search);
-    const leadId = urlParams.get('LeadId');
-    const contactId = urlParams.get('ContactId');
-    console.log("token="+token);
-    console.log(leadId);
-    console.log(contactId);
    var xhr = new XMLHttpRequest();
       xhr.open("POST", "https://dcci.creatio.com/0/ServiceModel/UsrAnonymousApprovalService.svc/ConfirmCaptcha");
       xhr.setRequestHeader("Accept", "application/json");
@@ -107,11 +120,23 @@ img.logo {
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           console.log(xhr.status);
+		  console.log(xhr.responseText);
+          var data=xhr.responseText;
+          var jsonResponse = JSON.parse(data);
+          console.log("ConfirmCaptchaResult" + jsonResponse["ConfirmCaptchaResult"]);
+          if(jsonResponse["ConfirmCaptchaResult"]!=true)
+          {
+            var capErrorDiv=  document.getElementById("captchaError")
+            capErrorDiv.style.display = "block";
+          }
+          else
+          {
+          window.location.replace("ThankYouPage.html");
+          }
         }};
       console.log(document.querySelector('input[name="response"]:checked').value);
-    const responseDetails= {
-      LeadId: leadId,
-      ContactId: contactId, 
+      const responseDetails= {
+      JWT: urlParams.get('JWT'),
       LeadResponse: document.querySelector('input[name="response"]:checked').value,
       GToken : token
     };
@@ -119,6 +144,7 @@ img.logo {
     console.log("respJson:" + respJson);
     xhr.send(respJson);
   }
+  
 </script>
 </head>
 <body>
@@ -127,20 +153,18 @@ img.logo {
   </div>
   <h2 id="LeadName" >Introduction form</h2>
   <form action="ThankYouPage.html" class="container" id="responseForm">
-    <p id="responseMark">Please enter your response</p>
-    <input type="radio" id="response" name="response" value="Yes" >
+    <p id="responseMark">Please log your response</p>
+    <input type="radio" id="response" name="response" value="Accepted" >
     <label for="yes_response">Yes, I am interested</label><br><br>
-    <input type="radio" id="response" name="response" value="No" >
+    <input type="radio" id="response" name="response" value="Rejected" >
     <label for="no_response">No, I am not interested</label><br><br>
-    <div id='recaptcha' class="g-recaptcha"
-          data-sitekey="6Lc5Je8eAAAAAMKpzGRBH3Vv6XKWviLPcq5JYuHu"
-          data-callback="onSubmit"
-          data-size="invisible"></div>
-      <button class="btn" id='submit'>Submit response</button>
-    
+    <div class="g-recaptcha" data-sitekey="6Lf82JsfAAAAADkV7IHRfYT3vysk4Q667sForE16"></div><br>
+		   <span class = "spanerror" id="captchacheckbox" hidden>Please check captcha checkbox</span><br>
+		    <button class="btn" id='submit'>Submit response</button>
+     <span class = "spanerror" id="captchaError" hidden>Something went wrong... please try again later!</span>
   </form>
   
-  
-  <script>onload();</script>
+ <script src="https://www.google.com/recaptcha/api.js?onload=onload&render=explicit" async defer>
+</script>
 </body>
 </html>
